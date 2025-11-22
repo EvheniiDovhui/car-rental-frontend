@@ -1,0 +1,136 @@
+.wrapper {
+    font-family: sans-serif;
+  }
+  
+  /* === HERO === */
+  .hero {
+    position: relative;
+    padding-top: 80px;
+    height: 100vh;
+    background: url("https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1600&q=80") center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    background-attachment: fixed; /* 🎉 паралакс */
+  }
+
+  .hero {
+    position: relative;
+    height: 100vh;
+    background: url("https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1600&q=80")
+      center / cover no-repeat;
+    background-attachment: fixed;
+  }
+  
+
+  .heroContent {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+    padding: 0 20px;
+    animation: fadeUp 1.3s ease forwards;
+    opacity: 0;
+  }
+  
+  @keyframes fadeUp {
+    0% { opacity: 0; transform: translateY(40px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+    
+  
+  .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: brightness(0.4);
+    top: 0;
+    left: 0;
+  }
+  
+  .heroContent {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+    padding: 0 20px;
+  }
+  
+  .title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+  }
+  
+  .subtitle {
+    font-size: 1.3rem;
+    margin-bottom: 25px;
+    opacity: 0.9;
+  }
+  
+  /* Buttons */
+  .buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+  }
+  
+  .primaryBtn,
+  .secondaryBtn {
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    transition: 0.3s;
+  }
+  
+  .primaryBtn {
+    background: #0074ff;
+    color: white;
+  }
+  
+  .primaryBtn:hover {
+    background: #005fcc;
+  }
+  
+  .secondaryBtn {
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+  }
+  
+  .secondaryBtn:hover {
+    background: white;
+    color: #222;
+  }
+  
+  /* === BENEFITS === */
+  .benefits {
+    padding: 60px 20px;
+    text-align: center;
+  }
+  
+  .benefitGrid {
+    margin-top: 30px;
+    display: grid;
+    gap: 24px;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
+  
+  .benefitCard {
+    padding: 20px;
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* === FOOTER === */
+  .footer {
+    text-align: center;
+    padding: 20px;
+    background: #111;
+    color: white;
+    margin-top: 50px;
+  }
+  

@@ -1,0 +1,85 @@
+.header {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background: linear-gradient( to bottom, rgba(0, 0, 0, 0.45), transparent );
+  }
+  
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .logo {
+    font-size: 28px;
+    font-weight: 800;
+    color: #0074ff;
+    text-decoration: none;
+    letter-spacing: -0.5px;
+  }
+  
+  .nav {
+    display: flex;
+    gap: 25px;
+  }
+  
+  .link {
+    text-decoration: none;
+    color: rgb(250, 250, 250);
+    font-weight: 500;
+    transition: 0.3s;
+  }
+  
+  .link:hover {
+    color: #0074ff;
+    transform: translateY(-2px);
+  }
+  
+  /* BUTTONS */
+  .actions {
+    display: flex;
+    gap: 12px;
+  }
+  
+  .loginBtn {
+    padding: 8px 16px;
+    border-radius: 8px;
+    color: #0074ff;
+    border: 2px solid #0074ff;
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.3s;
+  }
+  
+  .loginBtn:hover {
+    background: #0074ff;
+    color: white;
+  }
+  
+  .primaryBtn {
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: #0074ff;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.3s;
+  }
+  
+  .primaryBtn:hover {
+    background: #005fcc;
+  }
+  
+  /* MOBILE (далі додамо меню) */
+  @media (max-width: 768px) {
+    .nav {
+      display: none;
+    }
+  }
+  
