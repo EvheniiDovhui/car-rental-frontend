@@ -1,0 +1,39 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: rgba(0,0,0,0.05);
+  }
+  
+  .form {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .title {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  button {
+    background: #0066ff;
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background: #0045b5;
+  }
+  

@@ -45,6 +45,7 @@
   .actions {
     display: flex;
     gap: 12px;
+    align-items: center;
   }
   
   .loginBtn {
@@ -83,3 +84,8 @@
     }
   }
   
+  .userName {
+    color: white;
+    font-weight: 500;
+    padding: 2px;
+  }
