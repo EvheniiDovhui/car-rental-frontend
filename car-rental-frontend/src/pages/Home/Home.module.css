@@ -7,7 +7,8 @@
     position: relative;
     padding-top: 80px;
     height: 100vh;
-    background: url("https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1600&q=80") center/cover no-repeat;
+    background: url("https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1600&q=80")
+      center / cover no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -15,15 +16,6 @@
     text-align: center;
     background-attachment: fixed; /* 🎉 паралакс */
   }
-
-  .hero {
-    position: relative;
-    height: 100vh;
-    background: url("https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1600&q=80")
-      center / cover no-repeat;
-    background-attachment: fixed;
-  }
-  
 
   .heroContent {
     position: relative;
