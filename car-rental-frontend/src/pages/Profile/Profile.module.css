@@ -1,49 +1,139 @@
 .container {
-    max-width: 600px;
-    margin: 60px auto;
-    padding: 20px;
-  }
-  
-  .title {
-    font-size: 28px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  .card {
-    background: white;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  }
-  
-  .logoutBtn {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background: crimson;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  
-  input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    font-size: 16px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-  }
-  
-  .saveBtn {
-    padding: 10px 20px;
-    background: #007aff;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-right: 15px;
-  }
-  
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.pageTitle {
+  font-size: 32px;
+  margin-bottom: 40px;
+  text-align: center;
+  color: #1e293b;
+}
+
+/* Розмітка: на великих екранах форма зліва, улюблені справа/знизу */
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+/* --- КАРТКА ПРОФІЛЮ --- */
+.profileCard {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  max-width: 500px;
+  margin: 0 auto;
+  /* Центруємо форму */
+  width: 100%;
+}
+
+.sectionTitle {
+  font-size: 22px;
+  margin-bottom: 25px;
+  color: #334155;
+  border-bottom: 2px solid #f1f5f9;
+  padding-bottom: 10px;
+}
+
+.formGroup {
+  margin-bottom: 20px;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  transition: 0.2s;
+  box-sizing: border-box;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #0074ff;
+  box-shadow: 0 0 0 3px rgba(0, 116, 255, 0.1);
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.saveBtn {
+  padding: 12px 24px;
+  background-color: #0074ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.saveBtn:hover {
+  background-color: #0062d6;
+}
+
+.logoutBtn {
+  padding: 12px 24px;
+  background-color: #fee2e2;
+  color: #ef4444;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.logoutBtn:hover {
+  background-color: #fecaca;
+}
+
+/* --- СЕКЦІЯ УЛЮБЛЕНИХ --- */
+.favoritesSection {
+  width: 100%;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 40px;
+  background: #f8fafc;
+  border-radius: 12px;
+  border: 2px dashed #cbd5e1;
+  color: #64748b;
+}
+
+.linkBtn {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: white;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #0074ff;
+  font-weight: 600;
+}
+
+.linkBtn:hover {
+  border-color: #0074ff;
+}
