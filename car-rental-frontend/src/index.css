@@ -8,3 +8,9 @@ body {
   margin: 0;
   font-family: sans-serif;
 }
+
+.main-content {
+  padding-top: 80px;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
