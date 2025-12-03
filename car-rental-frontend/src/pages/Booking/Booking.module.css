@@ -86,3 +86,82 @@ label {
     background: #ccc;
     cursor: not-allowed;
 }
+
+.addonsButton {
+    background: #fff;
+    color: #0074ff;
+    padding: 10px;
+    border: 1px solid #0074ff;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.addonsButton:hover {
+    background: #e6f0ff;
+}
+
+.modalBackdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal {
+    background: #fff;
+    padding: 24px;
+    border-radius: 12px;
+    width: 400px;
+    max-width: 90vw;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.2);
+}
+
+.modalTitle {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.addonItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.addonInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.addonName {
+    font-weight: 500;
+}
+
+.addonPrice {
+    font-size: 14px;
+    color: #64748b;
+}
+
+.modalActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.secondaryButton {
+    background: #e2e8f0;
+    color: #0f172a;
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+}

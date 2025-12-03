@@ -137,3 +137,82 @@
 .linkBtn:hover {
   border-color: #0074ff;
 }
+
+/* --- СЕКЦІЯ БРОНЮВАНЬ --- */
+.reservationsSection {
+  width: 100%;
+}
+
+.reservationsList {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 20px;
+}
+
+.reservationItem {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  border-left: 4px solid #0074ff;
+  display: grid;
+  gap: 10px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.reservationItem:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.reservationItem > div {
+  font-size: 15px;
+  color: #475569;
+}
+
+.reservationItem > div:first-child {
+  font-weight: 600;
+  color: #1e293b;
+  font-size: 16px;
+}
+
+/* --- ОПЦІЇ (ADDONS) --- */
+.addons {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.addons > div:first-child {
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.addons ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.addons li {
+  background: #f1f5f9;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #334155;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.addons li::before {
+  content: "✓";
+  color: #0074ff;
+  font-weight: bold;
+}

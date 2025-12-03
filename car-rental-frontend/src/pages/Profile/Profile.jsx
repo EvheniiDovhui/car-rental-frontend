@@ -10,6 +10,8 @@ export default function Profile() {
   const navigate = useNavigate();
   
   const [favoriteCars, setFavoriteCars] = useState([]);
+  const [reservations, setReservations] = useState([]);
+  const [allCars, setAllCars] = useState([]);
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -31,20 +33,34 @@ export default function Profile() {
 
   // 2. Завантаження улюблених авто
   useEffect(() => {
-    if (user && user.favorites && user.favorites.length > 0) {
-      // Завантажуємо всі авто, щоб знайти серед них улюблені
-      // (В ідеалі бекенд повинен мати ендпоінт /api/favorites, але поки так)
-      fetch("http://localhost:8080/api/cars")
-        .then((res) => res.json())
-        .then((allCars) => {
-          // Фільтруємо: залишаємо тільки ті, ID яких є в списку user.favorites
-          const favs = allCars.filter((car) => user.favorites.includes(car.id));
+    // Завантажуємо всі авто один раз для використання у різних місцях
+    fetch("http://localhost:8080/api/cars")
+      .then((res) => res.json())
+      .then((cars) => {
+        setAllCars(cars);
+        
+        if (user && user.favorites && user.favorites.length > 0) {
+          const favs = cars.filter((car) => user.favorites.includes(car.id));
           setFavoriteCars(favs);
-        })
-        .catch((err) => console.error("Не вдалося завантажити авто:", err));
-    } else {
-      setFavoriteCars([]);
-    }
+        }
+      })
+      .catch((err) => console.error("Не вдалося завантажити авто:", err));
+  }, [user]);
+
+  // 3. Завантаження бронювань користувача
+  useEffect(() => {
+    if (!user) return;
+
+    fetch(`http://localhost:8080/api/user-reservations?userId=${user.id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status === "success") {
+          setReservations(data.reservations || []);
+        } else {
+          console.error("Не вдалося завантажити бронювання:", data.error);
+        }
+      })
+      .catch((err) => console.error("Помилка завантаження бронювань:", err));
   }, [user]);
 
   // Обробка полів вводу
@@ -86,6 +102,12 @@ export default function Profile() {
   }
 
   if (!user) return null;
+
+  // Функція для отримання назви авто за ID
+  const getCarName = (carId) => {
+    const car = allCars.find((c) => c.id === carId);
+    return car ? `${car.brand} ${car.model}` : `Авто ID: ${carId}`;
+  };
 
   return (
     <div className={styles.container}>
@@ -157,6 +179,7 @@ export default function Profile() {
             </div>
           )}
         </div>
+
       </div>
     </div>
   );
