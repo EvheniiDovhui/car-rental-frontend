@@ -11,6 +11,9 @@ export default function Booking() {
   const [car, setCar] = useState(null);
   const [dates, setDates] = useState({ start: "", end: "" });
   const [totalPrice, setTotalPrice] = useState(0);
+  const [addonsModalOpen, setAddonsModalOpen] = useState(false);
+  const [availableAddons, setAvailableAddons] = useState([]);
+  const [selectedAddons, setSelectedAddons] = useState([]);
 
   // 1. Завантаження авто
   useEffect(() => {
@@ -33,16 +36,58 @@ export default function Booking() {
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
 
       if (diffDays > 0) {
-        // 🔥 ТУТ БУЛА ПОМИЛКА: car.price -> car.pricePerDay
-        setTotalPrice(diffDays * car.pricePerDay); 
+        let base = diffDays * car.pricePerDay;
+
+        // додаємо вартість обраних опцій (мінімальна реалізація)
+        const addonsSumPerDay = selectedAddons.reduce(
+          (sum, addon) => sum + (addon.pricePerDay || 0),
+          0
+        );
+
+        base += diffDays * addonsSumPerDay;
+        setTotalPrice(base);
       } else {
         setTotalPrice(0);
       }
     }
-  }, [dates, car]);
+  }, [dates, car, selectedAddons]);
 
   function handleChange(e) {
     setDates({ ...dates, [e.target.name]: e.target.value });
+  }
+
+  function openAddons() {
+    if (!dates.start || !dates.end) {
+      alert("Спочатку виберіть дати");
+      return;
+    }
+    // Завантажуємо опції з бекенду
+    fetch("http://localhost:8080/api/addons")
+      .then((res) => {
+        if (!res.ok) throw new Error("Помилка завантаження опцій");
+        return res.json();
+      })
+      .then((data) => {
+        // очікуємо формат з addons.json: [{ name, pricePerDay }]
+        const withIds = data.map((addon, index) => ({
+          id: index + 1,
+          ...addon,
+        }));
+        setAvailableAddons(withIds);
+        setAddonsModalOpen(true);
+      })
+      .catch(() => {
+        alert("Не вдалося завантажити додаткові опції");
+      });
+  }
+
+  function toggleAddon(addon) {
+    const exists = selectedAddons.find((a) => a.id === addon.id);
+    if (exists) {
+      setSelectedAddons(selectedAddons.filter((a) => a.id !== addon.id));
+    } else {
+      setSelectedAddons([...selectedAddons, addon]);
+    }
   }
 
   async function handleReserve(e) {
@@ -67,7 +112,8 @@ export default function Booking() {
         carId: car.id,
         startDate: dates.start,
         endDate: dates.end,
-        totalPrice: totalPrice // Тепер тут буде число, а не null
+        totalPrice: totalPrice,
+        addons: selectedAddons,
       })
     });
 
@@ -110,6 +156,14 @@ export default function Booking() {
           className={styles.input}
         />
 
+        <button
+          type="button"
+          className={styles.addonsButton}
+          onClick={openAddons}
+        >
+          Optional addons
+        </button>
+
         <div className={styles.total}>
           До сплати: <span>${totalPrice}</span>
         </div>
@@ -118,6 +172,40 @@ export default function Booking() {
           Підтвердити бронювання
         </button>
       </form>
+
+      {addonsModalOpen && (
+        <div className={styles.modalBackdrop} onClick={() => setAddonsModalOpen(false)}>
+          <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.modalTitle}>Виберіть додаткові опції</div>
+            {availableAddons.map((addon) => {
+              const checked = !!selectedAddons.find((a) => a.id === addon.id);
+              return (
+                <div key={addon.id} className={styles.addonItem}>
+                  <div className={styles.addonInfo}>
+                    <span className={styles.addonName}>{addon.name}</span>
+                    <span className={styles.addonPrice}>+${addon.pricePerDay} /доба</span>
+                  </div>
+                  <input
+                    type="checkbox"
+                    checked={checked}
+                    onChange={() => toggleAddon(addon)}
+                  />
+                </div>
+              );
+            })}
+
+            <div className={styles.modalActions}>
+              <button
+                type="button"
+                className={styles.secondaryButton}
+                onClick={() => setAddonsModalOpen(false)}
+              >
+                Закрити
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
