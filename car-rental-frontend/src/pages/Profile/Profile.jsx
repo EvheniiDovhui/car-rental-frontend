@@ -3,7 +3,6 @@ import { UserContext } from "../../context/UserContext.js";
 import { useNavigate } from "react-router-dom";
 import CarCard from "../../components/CarCard/CarCard";
 import styles from "./Profile.module.css";
-// import { toast } from "react-toastify"; // Якщо використовуєш toast
 
 export default function Profile() {
   const { user, setUser, logout } = useContext(UserContext);
@@ -18,7 +17,6 @@ export default function Profile() {
     password: ""
   });
 
-  // 1. Перевірка авторизації
   useEffect(() => {
     if (!user) {
       navigate("/login");
@@ -31,9 +29,7 @@ export default function Profile() {
     }
   }, [user, navigate]);
 
-  // 2. Завантаження улюблених авто
   useEffect(() => {
-    // Завантажуємо всі авто один раз для використання у різних місцях
     fetch("http://localhost:8080/api/cars")
       .then((res) => res.json())
       .then((cars) => {
@@ -47,7 +43,6 @@ export default function Profile() {
       .catch((err) => console.error("Не вдалося завантажити авто:", err));
   }, [user]);
 
-  // 3. Завантаження бронювань користувача
   useEffect(() => {
     if (!user) return;
 
@@ -63,34 +58,29 @@ export default function Profile() {
       .catch((err) => console.error("Помилка завантаження бронювань:", err));
   }, [user]);
 
-  // Обробка полів вводу
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
-  // Збереження змін профілю
   async function handleSave() {
     try {
-      const res = await fetch("http://localhost:8080/api/profile", { // Переконайся, що такий роут є на бекенді, або використовуй /api/users
+      const res = await fetch("http://localhost:8080/api/profile", { 
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           id: user.id,
           name: form.name,
           email: form.email,
-          password: form.password // Якщо пустий, бекенд має ігнорувати
+          password: form.password
         })
       });
 
       const data = await res.json();
 
       if (data.status === "success") {
-        // Зберігаємо оновленого юзера (не гублячи favorites)
         const updatedUser = { ...data.user, favorites: user.favorites };
         setUser(updatedUser);
         localStorage.setItem("user", JSON.stringify(updatedUser));
-        
-        // Виводимо повідомлення (alert або toast)
         alert("Дані успішно оновлено!");
       } else {
         alert("Помилка: " + (data.error || "Не вдалося оновити профіль"));
@@ -102,12 +92,6 @@ export default function Profile() {
   }
 
   if (!user) return null;
-
-  // Функція для отримання назви авто за ID
-  const getCarName = (carId) => {
-    const car = allCars.find((c) => c.id === carId);
-    return car ? `${car.brand} ${car.model}` : `Авто ID: ${carId}`;
-  };
 
   return (
     <div className={styles.container}>
@@ -160,24 +144,68 @@ export default function Profile() {
           </div>
         </div>
 
-        {/* ПРАВА/НИЖНЯ КОЛОНКА: Улюблені авто */}
-        <div className={styles.favoritesSection}>
-          <h3 className={styles.sectionTitle}>❤️ Улюблені авто</h3>
+        {/* ПРАВА/НИЖНЯ КОЛОНКА: Бронювання та Улюблені */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '30px', width: '100%' }}>
           
-          {favoriteCars.length > 0 ? (
-            <div className={styles.grid}>
-              {favoriteCars.map((car) => (
-                <CarCard key={car.id} car={car} />
-              ))}
-            </div>
-          ) : (
-            <div className={styles.emptyState}>
-              <p>Ви ще не додали жодного авто до улюблених.</p>
-              <button onClick={() => navigate("/cars")} className={styles.linkBtn}>
-                Перейти до каталогу →
-              </button>
-            </div>
-          )}
+          {/* СЕКЦІЯ: МОЇ БРОНЮВАННЯ */}
+          <div className={styles.favoritesSection}>
+            <h3 className={styles.sectionTitle}>🔑 Мої орендовані авто</h3>
+            
+            {reservations.length > 0 && allCars.length > 0 ? (
+              <div className={styles.grid}>
+                {reservations.map((res) => {
+                  const car = allCars.find((c) => c.id === res.carId);
+                  if (car) {
+                    return (
+                      <div key={res.id} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                        <div style={{ 
+                          background: '#f0f9ff', 
+                          padding: '10px', 
+                          borderRadius: '8px', 
+                          fontSize: '0.9rem', 
+                          border: '1px solid #bae6fd',
+                          color: '#0369a1'
+                        }}>
+                          <strong>Період:</strong> <br/> {res.startDate} — {res.endDate}
+                          <div style={{ marginTop: '5px', fontWeight: 'bold' }}>Сума: {res.totalPrice}$</div>
+                        </div>
+                        <CarCard car={car} />
+                      </div>
+                    );
+                  }
+                  return null; 
+                })}
+              </div>
+            ) : (
+              <div className={styles.emptyState}>
+                <p>У вас поки немає активних бронювань.</p>
+                <button onClick={() => navigate("/cars")} className={styles.linkBtn}>
+                  Перейти до каталогу →
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* СЕКЦІЯ: УЛЮБЛЕНІ АВТО */}
+          <div className={styles.favoritesSection}>
+            <h3 className={styles.sectionTitle}>❤️ Улюблені авто</h3>
+            
+            {favoriteCars.length > 0 ? (
+              <div className={styles.grid}>
+                {favoriteCars.map((car) => (
+                  <CarCard key={car.id} car={car} />
+                ))}
+              </div>
+            ) : (
+              <div className={styles.emptyState}>
+                <p>Ви ще не додали жодного авто до улюблених.</p>
+                <button onClick={() => navigate("/cars")} className={styles.linkBtn}>
+                  Перейти до каталогу →
+                </button>
+              </div>
+            )}
+          </div>
+
         </div>
 
       </div>
